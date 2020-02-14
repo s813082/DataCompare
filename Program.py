@@ -22,6 +22,12 @@ for check in AccessDB:
 print("Finish check Here is ",len(NotExit)," data not in EForm")
 print("===========================================")
 print("beginning to get missing data")
-InsertData = SelectWHQAccessData.GetMissingData(NotExit)
-print("Try Insert missing data")
-SelectWHQEFormData.InsertMissingData(InsertData)
+
+if len(NotExit) != 0:
+    InsertData = SelectWHQAccessData.GetMissingData(NotExit)
+    print("Try Insert missing data")
+    SelectWHQEFormData.InsertMissingData(InsertData)
+else:
+    print("There is no missing data~~")
+
+
