@@ -31,7 +31,8 @@ def GetMissingData(NotExit):
     conn = pymssql.connect(AccessConfig.SERVER,AccessConfig.UID, AccessConfig.PWD, AccessConfig.DATABASE)
     cursor = conn.cursor()
     InsertData = []
-    cursor.execute("select  t_Room,  t_BeginDate,  t_EndDate,  t_BeginTime,  t_EndTime from WistronMRBooking where t_PK in ("+strNotExit+")")
+    cursor.execute(
+        "select B.t_PK as Booking, B.t_Room as RESOURCE_ID , concat(B.t_BeginDate,' ',B.t_BeginTime) as START_DT,  concat(B.t_EndDate,' ',B.t_EndTime) as END_DT,  CONVERT(VARCHAR,E.t_CreateDate,121) as APPLY_DT from WistronMRBooking B ,OGEmp E  where B.t_pk = E.t_pk and B.t_PK in ("+strNotExit+")")
     for data in cursor:
         a = DataModel.BookingDetail(0,data[0],data[1],data[2],data[3],data[4])
         InsertData.append(a)
