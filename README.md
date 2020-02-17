@@ -1,3 +1,7 @@
 # DataCompare
  
-寫log檔案
+To-Do list
+
+write log history
+Run three times everyday
+
