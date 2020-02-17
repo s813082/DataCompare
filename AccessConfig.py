@@ -1,4 +1,0 @@
-SERVER="10.34.3.92"
-DATABASE="OGSystem"
-UID="sa"
-PWD="TQUARK123!"
