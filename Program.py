@@ -1,21 +1,27 @@
 import SelectWHQAccessData
 import SelectWHQEFormData
 import LogtoFile,sys
-from datetime import datetime
+from datetime import datetime,date,timedelta
 
 ProgramStartTime = datetime.now()
 
-NotExit = []
+
 LogtoFile.LoggingMSG("========="+str(ProgramStartTime)+"========")
 LogtoFile.LoggingMSG("Program start...")
 # LogtoFile.LoggingMSG("===========================================")
+NotExit = []
+Today = date.today()
+Yesterday = Today - timedelta(days=1)
+
+strYesterday = Yesterday.strftime("%Y-%m-%d")
+strToday = Today.strftime("%Y-%m-%d")
 try:
     LogtoFile.LoggingMSG("Get Access Data")
-    AccessDB = SelectWHQAccessData.GetAccessData()
+    AccessDB = SelectWHQAccessData.GetAccessData(strToday,strYesterday)
     LogtoFile.LoggingMSG("Get EForm Data")
-    EfromDB = SelectWHQEFormData.GetEformData()
+    EfromDB = SelectWHQEFormData.GetEformData(strToday)
 except Exception as GetData:
-    LogtoFile.LoggingMSG("Get Data Fail : "+str(GetData))
+    LogtoFile.WarningMSG("Get Data Fail : "+str(GetData))
     ErrorStop = datetime.now()
     LogtoFile.LoggingMSG("========="+str(ErrorStop)+"========")
     sys.exit(0)
@@ -32,7 +38,7 @@ try:
 
     LogtoFile.LoggingMSG("Finish check Here is "+str(len(NotExit))+" data not in EForm")
 except Exception as CompareData:
-    LogtoFile.LoggingMSG("CompareData Fail : "+str(CompareData))
+    LogtoFile.WarningMSG("CompareData Fail : "+str(CompareData))
     ErrorStop = datetime.now()
     LogtoFile.LoggingMSG("========="+str(ErrorStop)+"========")
     sys.exit(0)
@@ -53,7 +59,7 @@ try:
         LogtoFile.LoggingMSG("========="+str(NoDataEndTime)+"========")
 
 except Exception as InsertData:
-    LogtoFile.LoggingMSG("InsertData Fail : "+str(InsertData))
+    LogtoFile.WarningMSG("InsertData Fail : "+str(InsertData))
     ErrorStop = datetime.now()
     LogtoFile.LoggingMSG("========="+str(ErrorStop)+"========")
     sys.exit(0)

@@ -1,13 +1,15 @@
 import pymssql
 from config import EformConfig
-from datetime import datetime
+from datetime import datetime,date
 import LogtoFile
 
-def GetEformData():
+Today = str(date.today())
+print(Today)
+def GetEformData(Today):
     conn = pymssql.connect(EformConfig.SERVER,EformConfig.UID, EformConfig.PWD, EformConfig.DATABASE)
     cursor = conn.cursor()
     # cursor.execute("SELECT UPPER(booking) FROM  BOK2_APPLICATION WHERE resource_id like 'B3VIP%' and booking is not null ORDER BY APPLICATION_ID")
-    cursor.execute("select UPPER(booking) from BOK2_APPLICATION ")
+    cursor.execute("select UPPER(booking) from BOK2_APPLICATION where  booking <> '' and START_DT > '"+Today+"'")
     EformDB = []
 
     for row in cursor:
@@ -39,7 +41,7 @@ def InsertMissingData(Data):
         # if a != (len(Data)-1):
         #     concatData = concatData + "," 
         cursor.execute("INSERT INTO [WHQMeetingRoom2].[dbo].[BOK2_APPLICATION] ([APPLICATION_ID] , [RESOURCE_ID]     , [USERID]          , [START_DT]        , [END_DT]          , [APPLY_DT]        , [REVIEW_STATUS]   , [FullName]        , [Booking])         VALUES ('"+str(Data[a].ID)+"','"+Data[a].Resource_ID+"','"+Data[a].USERID+"','"+Data[a].START_DT+"','"+Data[a].END_DT+"','"+Data[a].APPLY_DT+"','"+Data[a].Review_Status+"','"+Data[a].FullName+"','"+str(Data[a].Booking)+"')")     
-        conn.commit()
+        # conn.commit()
         LogtoFile.LoggingMSG(str(Data[a].Booking)+" insert succefully")
         
         

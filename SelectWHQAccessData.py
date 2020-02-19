@@ -4,18 +4,13 @@ from config import AccessConfig
 from datetime import date,timedelta
 import LogtoFile
 
-def GetAccessData():
+def GetAccessData(Today,Yesterday):
     conn = pymssql.connect(AccessConfig.SERVER,AccessConfig.UID, AccessConfig.PWD, AccessConfig.DATABASE)
     cursor = conn.cursor()
-    Today = date.today()
-    Yesterday = Today - timedelta(days=10)
-
-    strYesterday = Yesterday.strftime("%Y-%m-%d")
-    strToday = Today.strftime("%Y-%m-%d")
 
     # cursor.execute("select  B.t_Room,  B.t_BeginDate,  B.t_EndDate,  B.t_BeginTime,  B.t_EndTime,  E.t_CreateDate from WistronMRBooking B inner join OGEmp E on B.t_PK = E.t_PK order by t_CreateDate desc")
-    cursor.execute("SELECT  convert(nvarchar(50), B.t_PK) FROM WistronMRBooking B INNER JOIN OGEmp E  ON B.t_PK = E.t_PK  where t_CreateDate >'"+strYesterday+"'  and t_CreateDate < '"+strToday+"' ORDER BY t_CreateDate DESC;")
-    # cursor.execute("SELECT  convert(nvarchar(50), B.t_PK) FROM WistronMRBooking B INNER JOIN OGEmp E  ON B.t_PK = E.t_PK   ORDER BY t_CreateDate DESC;")
+    # cursor.execute("SELECT  convert(nvarchar(50), B.t_PK) FROM WistronMRBooking B INNER JOIN OGEmp E  ON B.t_PK = E.t_PK  where t_CreateDate >'"+Yesterday+"'  and t_CreateDate < '"+Today+"' and t_FinishTime is not null ORDER BY t_CreateDate DESC;")
+    cursor.execute("SELECT  convert(nvarchar(50), B.t_PK) FROM WistronMRBooking B INNER JOIN OGEmp E  ON B.t_PK = E.t_PK and t_FinishTime is  null and b.t_begindate > '"+Today+"' ORDER BY t_CreateDate DESC;")
 
     AccessDB = []
 
