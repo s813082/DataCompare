@@ -12,11 +12,12 @@ class BookingDetail:
         self.Review_Status = "A"
 
 class CheckDoubleTime:
-    def __init__(self,RoomID,Start_DT,End_DT):
+    def __init__(self,RoomID,Start_DT,End_DT,Booking,Today,Tomorrow):
         super().__init__()
-        self.ID = ID
         self.RoomID = RoomID
         self.Start_DT = Start_DT
-        self.START_DT = START_DT
         self.End_DT = End_DT
+        self.Booking = Booking
+        self.Today = Today
+        self.Tomorrow = Tomorrow
         
