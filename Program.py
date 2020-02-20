@@ -1,6 +1,9 @@
 import SelectWHQAccessData
 import SelectWHQEFormData
+import CheckDoubleTime
 import LogtoFile,sys
+import decimal
+from os import system
 from datetime import datetime,date,timedelta
 
 ProgramStartTime = datetime.now()
@@ -36,6 +39,7 @@ try:
             LogtoFile.LoggingMSG("QRCode {"+check+"} is not exit in EForm database")
             NotExit.append(check)
 
+    NotExit = CheckDoubleTime.CompareIfExit(NotExit)        
     LogtoFile.LoggingMSG("Finish check Here is "+str(len(NotExit))+" data not in EForm")
 except Exception as CompareData:
     LogtoFile.WarningMSG("CompareData Fail : "+str(CompareData))
@@ -64,4 +68,6 @@ except Exception as InsertData:
     LogtoFile.LoggingMSG("========="+str(ErrorStop)+"========")
     sys.exit(0)
 
+
+# system('pause')
 
