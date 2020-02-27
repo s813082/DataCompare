@@ -30,8 +30,8 @@ def GetMissingData(NotExit):
     cursor = conn.cursor()
     InsertData = []
     cursor.execute(
-        "select B.t_PK as Booking, B.t_Room as RESOURCE_ID , concat(B.t_BeginDate,' ',B.t_BeginTime) as START_DT,  concat(B.t_EndDate,' ',B.t_EndTime) as END_DT,  CONVERT(VARCHAR,E.t_CreateDate,121) as APPLY_DT from WistronMRBooking B ,OGEmp E  where B.t_pk = E.t_pk and B.t_PK in ("+strNotExit+")")
+        "select B.t_PK as Booking, B.t_Room as RESOURCE_ID , concat(B.t_BeginDate,' ',B.t_BeginTime) as START_DT,  concat(B.t_EndDate,' ',B.t_EndTime) as END_DT,  CONVERT(VARCHAR,E.t_CreateDate,121) as APPLY_DT , SUBSTRING(t_MailContent,5,6) as FullName from WistronMRBooking B ,OGEmp E  where B.t_pk = E.t_pk and B.t_PK in ("+strNotExit+")")
     for data in cursor:
-        a = DataModel.BookingDetail(0,data[0],data[1],data[2],data[3],data[4])
+        a = DataModel.BookingDetail(0,data[0],data[1],data[2],data[3],data[4],data[5])
         InsertData.append(a)
     return InsertData
