@@ -6,18 +6,22 @@ import decimal
 from os import system
 from datetime import datetime,date,timedelta
 
+# There are three part to compar data in this program
+# 1. Get both Database's data
+# 2. To find if Access Datebase is exit in Eform Database or not
+# 3. Insert Access Data into Eform
+
 ProgramStartTime = datetime.now()
-
-
 LogtoFile.LoggingMSG("========="+str(ProgramStartTime)+"========")
 LogtoFile.LoggingMSG("Program start...")
-# LogtoFile.LoggingMSG("===========================================")
 NotExit = []
+
 Today = date.today()
-Yesterday = Today - timedelta(days=1)
+Yesterday = Today - timedelta(days=10)
 
 strYesterday = Yesterday.strftime("%Y-%m-%d")
 strToday = Today.strftime("%Y-%m-%d")
+
 try:
     LogtoFile.LoggingMSG("Get Access Data")
     AccessDB = SelectWHQAccessData.GetAccessData(strToday,strYesterday)
@@ -29,7 +33,6 @@ except Exception as GetData:
     LogtoFile.LoggingMSG("========="+str(ErrorStop)+"========")
     sys.exit(0)
 
-# LogtoFile.LoggingMSG("===========================================")
 LogtoFile.LoggingMSG("Start check if QRCODE is exit in EFormDB")
 
 try:
@@ -47,7 +50,6 @@ except Exception as CompareData:
     LogtoFile.LoggingMSG("========="+str(ErrorStop)+"========")
     sys.exit(0)
 
-# LogtoFile.LoggingMSG("===========================================")
 try:
     LogtoFile.LoggingMSG("beginning to get missing data")
 
