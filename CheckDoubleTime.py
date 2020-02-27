@@ -23,6 +23,7 @@ def CompareIfExit(CompareDataList):
     for row in cursorAccess:
         a = DataModel.CheckDoubleTime(row[0],row[1],row[2],str(row[3]),row[4],row[5])
         cursorEform.execute("SELECT * FROM [BOK2_APPLICATION] WHERE resource_id = '"+a.RoomID+"' AND START_DT BETWEEN '"+a.Today+"' AND'"+a.Tomorrow+"' AND ((start_dt BETWEEN '"+a.Start_DT+"' AND '"+a.End_DT+"' OR end_dt BETWEEN '"+a.Start_DT+"' AND '"+a.End_DT+"') OR (START_DT < '"+a.Start_DT+"' OR END_DT >'"+a.End_DT+"'))")
+        # cursorEform.execute("SELECT * FROM [BOK2_APPLICATION] WHERE resource_id = '"+a.RoomID+"' AND START_DT BETWEEN '"+a.Today+"' AND'"+a.Tomorrow+"'and((start_dt BETWEEN '"+a.Start_DT+"' AND '"+a.End_DT+"' OR end_dt BETWEEN '"+a.Start_DT+"' AND '"+a.End_DT+"')OR((start_dt < '"+a.Start_DT+"' or '"+a.Start_DT+"' < end_dt )and(start_dt < '"+a.End_DT+"' or '"+a.End_DT+"' < end_dt )))")
         count = cursorEform.fetchall()
         if len(count) > 0:
             ListData.remove(a.Booking.upper())
