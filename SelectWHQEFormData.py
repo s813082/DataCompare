@@ -41,7 +41,7 @@ def InsertMissingData(Data):
         # if a != (len(Data)-1):
         #     concatData = concatData + "," 
         cursor.execute("INSERT INTO [WHQMeetingRoom2].[dbo].[BOK2_APPLICATION] ([APPLICATION_ID] , [RESOURCE_ID]     , [USERID]          , [START_DT]        , [END_DT]          , [APPLY_DT]        , [REVIEW_STATUS]   , [FullName]        , [Booking])         VALUES ('"+str(Data[a].ID)+"','"+Data[a].Resource_ID+"','"+Data[a].USERID+"','"+Data[a].START_DT+"','"+Data[a].END_DT+"','"+Data[a].APPLY_DT+"','"+Data[a].Review_Status+"','"+Data[a].FullName+"','"+str(Data[a].Booking)+"')")     
-        conn.commit()
+        # conn.commit()
         LogtoFile.LoggingMSG(str(Data[a].Booking)+" insert succefully")
         
         
